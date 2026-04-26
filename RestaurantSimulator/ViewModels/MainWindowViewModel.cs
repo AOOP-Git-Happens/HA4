@@ -8,11 +8,11 @@ public partial class MainWindowViewModel : ViewModelBase
     [ObservableProperty]
     private ViewModelBase _selectedTab;
     public ObservableCollection<ViewModelBase> Tabs { get; } = new();
-    public string Greeting { get; } = "Welcome to Restaurant Simulator!";
 
     public MainWindowViewModel()
     {
         Tabs.Add(new OrdersViewModel());
+        Tabs.Add(new StationsViewModel());
 
         SelectedTab = Tabs[0];
     }

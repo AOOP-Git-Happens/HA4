@@ -2,9 +2,9 @@ using Avalonia.Controls;
 
 namespace RestaurantSimulator.Views;
 
-public partial class OrdersView : UserControl
+public partial class StationsView : UserControl
 {
-    public OrdersView()
+    public StationsView()
     {
         InitializeComponent();
     }
