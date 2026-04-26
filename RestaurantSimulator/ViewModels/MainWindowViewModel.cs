@@ -13,6 +13,7 @@ public partial class MainWindowViewModel : ViewModelBase
     {
         Tabs.Add(new OrdersViewModel());
         Tabs.Add(new StationsViewModel());
+        Tabs.Add(new IngredientsViewModel());
 
         SelectedTab = Tabs[0];
     }
