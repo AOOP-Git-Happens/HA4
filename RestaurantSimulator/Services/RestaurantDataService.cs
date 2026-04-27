@@ -18,7 +18,7 @@ public class RestaurantDataService
 
     public void LoadRestaurantData()
     {
-        string filepath = "Assets/recipes.json";
+        string filepath = "Assets/Recipes.json";
 
         if(!File.Exists(filepath))
         {
