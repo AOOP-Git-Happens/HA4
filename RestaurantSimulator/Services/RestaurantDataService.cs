@@ -18,8 +18,6 @@ public class RestaurantDataService
 
     public void LoadRestaurantData()
     {
-        // Ensure you have a restaurant.json file in your Assets folder
-        // configured to "Copy if newer" in your .csproj
         string filepath = "Assets/restaurant.json";
 
         if(!File.Exists(filepath))
