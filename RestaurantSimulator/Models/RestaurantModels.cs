@@ -29,7 +29,7 @@ public class Recipe
     public string Difficulty { get; set; } = string.Empty;
     public double SalePrice { get; set; } 
     public List<RequiredIngredient> RequiredIngredients { get; set; } = new();
-    public List<RecipeStep> RecipeSteps{ get; set; } = new();
+    public List<RecipeStep> Steps{ get; set; } = new();
 }
 
 public class RequiredIngredient
