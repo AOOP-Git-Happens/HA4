@@ -1,0 +1,27 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:RestaurantSimulator.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:views="using:RestaurantSimulator.Views"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="RestaurantSimulator.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="RestaurantSimulator">
+
+    <TabControl ItemsSource="{Binding Tabs}" SelectedItem="{Binding SelectedTab}">
+    <TabControl.ItemTemplate>
+        <DataTemplate x:DataType="vm:ViewModelBase">
+            <TextBlock Text="{Binding Header}" />
+        </DataTemplate>
+    </TabControl.ItemTemplate>
+
+    <TabControl.ContentTemplate>
+        <DataTemplate x:DataType="vm:ViewModelBase">
+            <ContentControl Content="{Binding}" />
+        </DataTemplate>
+    </TabControl.ContentTemplate>
+    </TabControl>
+    
+</Window>

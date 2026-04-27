@@ -1,0 +1,11 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:RestaurantSimulator.ViewModels"
+             x:Class="RestaurantSimulator.Views.OrdersView"
+             x:DataType="vm:OrdersViewModel">
+            
+    <StackPanel>
+        <TextBlock Text="{Binding Header}"/>
+    </StackPanel>
+
+</UserControl>
