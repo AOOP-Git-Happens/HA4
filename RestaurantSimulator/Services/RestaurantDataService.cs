@@ -7,7 +7,7 @@ namespace RestaurantSimulator.Services;
 
 public class RestaurantDataService
 {
-    public List<Order> Orders { get; private set; } = new();
+    public List<Recipe> Recipes { get; private set; } = new();
     public List<Station> Stations { get; private set; } = new();
     public List<Ingredient> Ingredients { get; private set; } = new();
 
@@ -18,7 +18,7 @@ public class RestaurantDataService
 
     public void LoadRestaurantData()
     {
-        string filepath = "Assets/restaurant.json";
+        string filepath = "Assets/recipes.json";
 
         if(!File.Exists(filepath))
         {
@@ -36,7 +36,7 @@ public class RestaurantDataService
 
         if (restaurantData != null)
         {
-            Orders = restaurantData.Orders ?? new List<Order>();
+            Recipes = restaurantData.Recipes ?? new List<Recipe>();
             Stations = restaurantData.Stations ?? new List<Station>();
             Ingredients = restaurantData.Ingredients ?? new List<Ingredient>();
         }
