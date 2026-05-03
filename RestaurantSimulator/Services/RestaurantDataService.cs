@@ -41,4 +41,27 @@ public class RestaurantDataService
             Ingredients = restaurantData.Ingredients ?? new List<Ingredient>();
         }
     }
+
+    public void SaveRestaurantData()
+    {
+        string filepath = "Assets/Recipes.json";
+        
+        // Rebuild the main data object
+        var restaurantData = new RestaurantData
+        {
+            Recipes = this.Recipes,
+            Stations = this.Stations,
+            Ingredients = this.Ingredients
+        };
+
+        // Use camelCase to match your original JSON formatting
+        var options = new JsonSerializerOptions
+        {
+            WriteIndented = true,
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase 
+        };
+
+        string jsonString = JsonSerializer.Serialize(restaurantData, options);
+        File.WriteAllText(filepath, jsonString);
+    }
 }
