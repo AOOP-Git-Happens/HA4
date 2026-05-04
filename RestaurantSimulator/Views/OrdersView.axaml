@@ -5,7 +5,32 @@
              x:DataType="vm:OrdersViewModel">
             
     <StackPanel>
-        <TextBlock Text="{Binding Header}"/>
+
+        <Button Content="Generate Random Order" 
+            Command="{Binding AddRandomOrderCommand}"/>
+
+        <TextBlock Text="Pending Orders" FontSize="24" FontWeight="Bold" Margin="0,0,0,15"/>
+
+        <ListBox ItemsSource="{Binding CreatedOrders}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid ColumnDefinitions="Auto, *, Auto">
+                        <TextBlock Text="{Binding OrderId}" FontWeight="Bold" Margin="0,0,15,0"/>
+                        <TextBlock Grid.Column="1" Text="{Binding SelectedRecipe.Name}" />
+                        <TextBlock Grid.Column="2" Text="{Binding TakenAt, StringFormat='{}{0:HH:mm:ss}'}" 
+                                Foreground="Gray" Margin="15,0,0,0"/>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <StackPanel Orientation="Horizontal" Spacing="15">
+                <Button Content="Accept"
+                    />
+                <Button Content="Reject"
+                    />
+        </StackPanel>
+
     </StackPanel>
 
 </UserControl>
