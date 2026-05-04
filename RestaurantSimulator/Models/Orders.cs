@@ -8,5 +8,4 @@ public class Order
     public DateTime TakenAt { get; set; }
     public Recipe? SelectedRecipe { get; set; }
     public bool IsCompleted { get; set; } = false;
-    public bool IsRejected { get; set; } = false;
 }
