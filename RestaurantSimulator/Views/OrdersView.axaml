@@ -4,70 +4,94 @@
              x:Class="RestaurantSimulator.Views.OrdersView"
              x:DataType="vm:OrdersViewModel">
 
-<ScrollViewer VerticalScrollBarVisibility="Visible"
-              HorizontalScrollBarVisibility="Disabled">
+    <ScrollViewer VerticalScrollBarVisibility="Visible"
+                  HorizontalScrollBarVisibility="Disabled">
 
-    <StackPanel>
+        <StackPanel>
 
-        <TextBlock Text="Pending Orders" FontSize="24" FontWeight="Bold" Margin="0,0,0,15"/>
+            <TextBlock Text="Pending Orders" FontSize="24" FontWeight="Bold" Margin="0,0,0,15"/>
 
-        <ListBox ItemsSource="{Binding PendingOrders}"
-        SelectedItem="{Binding SelectedPendingOrder}"
-        MinHeight="120">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <Grid ColumnDefinitions="Auto, *, Auto">
-                        <TextBlock Text="{Binding OrderId}" FontWeight="Bold" Margin="0,0,15,0"/>
-                        <TextBlock Grid.Column="1" Text="{Binding SelectedRecipe.Name}" />
-                        <TextBlock Grid.Column="2" Text="{Binding TakenAt, StringFormat='{}{0:HH:mm:ss}'}" 
-                                Foreground="Gray" Margin="15,0,0,0"/>
-                    </Grid>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+            <ListBox ItemsSource="{Binding PendingOrders}"
+                     SelectedItem="{Binding SelectedPendingOrder}"
+                     MinHeight="120">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid ColumnDefinitions="Auto, *, Auto">
+                            <TextBlock Text="{Binding OrderId}" FontWeight="Bold" Margin="0,0,15,0"/>
+                            <TextBlock Grid.Column="1" Text="{Binding SelectedRecipe.Name}" />
+                            <TextBlock Grid.Column="2" Text="{Binding TakenAt, StringFormat='{}{0:HH:mm:ss}'}"
+                                       Foreground="Gray" Margin="15,0,0,0"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
 
-        <TextBlock Text=""/>
+            <TextBlock Text=""/>
             <StackPanel Orientation="Horizontal" Spacing="10">
-                    <Button Content="Accept"
+                <Button Content="Accept"
                         Command="{Binding AcceptOrderCommand}"/>
-                    <Button Content="Reject"
+                <Button Content="Reject"
                         Command="{Binding RejectOrderCommand}"/>
             </StackPanel>
-        <TextBlock Text=""/>
+            <TextBlock Text=""/>
 
-        <TextBlock Text="Accepted Orders" FontSize="24" FontWeight="Bold" Margin="0,0,0,15"/>
+            <TextBlock Text="Accepted Orders" FontSize="24" FontWeight="Bold" Margin="0,0,0,15"/>
 
-        <ItemsControl ItemsSource="{Binding AcceptedOrders}">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <Grid ColumnDefinitions="Auto, *, Auto">
-                        <TextBlock Text="{Binding OrderId}" FontWeight="Bold" Margin="0,0,15,0"/>
-                        <TextBlock Grid.Column="1" Text="{Binding SelectedRecipe.Name}" />
-                        <TextBlock Grid.Column="2" Text="{Binding TakenAt, StringFormat='{}{0:HH:mm:ss}'}" 
-                                Foreground="Gray" Margin="15,0,0,0"/>
-                    </Grid>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
-        <TextBlock Text=""/>
+            <ItemsControl ItemsSource="{Binding AcceptedOrders}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderBrush="Gray"
+                                BorderThickness="1"
+                                CornerRadius="8"
+                                Padding="10"
+                                Margin="0,0,0,10">
+                            <StackPanel Spacing="5">
+                                <Grid ColumnDefinitions="Auto, *, Auto">
+                                    <TextBlock Text="{Binding OrderId}"
+                                               FontWeight="Bold"
+                                               Margin="0,0,15,0"/>
 
-        <TextBlock Text="Rejected Orders" FontSize="24" FontWeight="Bold" Margin="0,0,0,15"/>
+                                    <TextBlock Grid.Column="1"
+                                               Text="{Binding SelectedRecipe.Name}" />
 
-        <ItemsControl ItemsSource="{Binding RejectedOrders}">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <Grid ColumnDefinitions="Auto, *, Auto">
-                        <TextBlock Text="{Binding OrderId}" FontWeight="Bold" Margin="0,0,15,0"/>
-                        <TextBlock Grid.Column="1" Text="{Binding SelectedRecipe.Name}" />
-                        <TextBlock Grid.Column="2" Text="{Binding TakenAt, StringFormat='{}{0:HH:mm:ss}'}" 
-                                Foreground="Gray" Margin="15,0,0,0"/>
-                    </Grid>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
-        <TextBlock Text=""/>
+                                    <TextBlock Grid.Column="2"
+                                               Text="{Binding TakenAt, StringFormat='{}{0:HH:mm:ss}'}"
+                                               Foreground="Gray"
+                                               Margin="15,0,0,0"/>
+                                </Grid>
 
-    </StackPanel>
-</ScrollViewer>
+                                <TextBlock Text="{Binding CurrentStep}" />
+
+                                <ProgressBar Minimum="0"
+                                             Maximum="100"
+                                             Value="{Binding OverallProgress}"
+                                             Height="16"/>
+
+                                <TextBlock Text="{Binding OverallProgress, StringFormat='Overall progress: {0}%'}"/>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            <TextBlock Text=""/>
+
+            <TextBlock Text="Rejected Orders" FontSize="24" FontWeight="Bold" Margin="0,0,0,15"/>
+
+            <ItemsControl ItemsSource="{Binding RejectedOrders}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Grid ColumnDefinitions="Auto, *, Auto">
+                            <TextBlock Text="{Binding OrderId}" FontWeight="Bold" Margin="0,0,15,0"/>
+                            <TextBlock Grid.Column="1" Text="{Binding SelectedRecipe.Name}" />
+                            <TextBlock Grid.Column="2" Text="{Binding TakenAt, StringFormat='{}{0:HH:mm:ss}'}"
+                                       Foreground="Gray" Margin="15,0,0,0"/>
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            <TextBlock Text=""/>
+
+        </StackPanel>
+    </ScrollViewer>
 
 </UserControl>
