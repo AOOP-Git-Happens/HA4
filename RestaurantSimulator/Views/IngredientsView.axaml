@@ -1,11 +1,36 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:vm="using:RestaurantSimulator.ViewModels"
+             xmlns:models="using:RestaurantSimulator.Models"
              x:Class="RestaurantSimulator.Views.IngredientsView"
              x:DataType="vm:IngredientsViewModel">
             
-    <StackPanel>
-        <TextBlock Text="{Binding Header}"/>
+    <StackPanel Margin="20">
+        <TextBlock Text="{Binding Header}" FontSize="24" FontWeight="Bold" Margin="0,0,0,15"/>
+
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Height="400">
+            <ItemsControl ItemsSource="{Binding Ingredients}">
+                <ItemsControl.ItemTemplate>
+                    <!-- Updated to match your exact class name -->
+                    <DataTemplate x:DataType="models:Ingredient">
+                        
+                        <Border Background="#2A2A2A" CornerRadius="5" Padding="10" Margin="0,0,0,10">
+                            <Grid ColumnDefinitions="*, Auto, Auto">
+                                
+                                <TextBlock Grid.Column="0" Text="{Binding Name}" VerticalAlignment="Center"/>
+                                
+                                <!-- Updated to bind to InitialStock -->
+                                <TextBlock Grid.Column="1" Text="{Binding InitialStock}" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                                
+                                <TextBlock Grid.Column="2" Text="{Binding Unit}" VerticalAlignment="Center" Foreground="Gray"/>
+                                
+                            </Grid>
+                        </Border>
+                        
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
     </StackPanel>
 
 </UserControl>
