@@ -3,9 +3,52 @@
              xmlns:vm="using:RestaurantSimulator.ViewModels"
              x:Class="RestaurantSimulator.Views.StationsView"
              x:DataType="vm:StationsViewModel">
-            
-    <StackPanel>
-        <TextBlock Text="{Binding Header}"/>
-    </StackPanel>
+
+    <ScrollViewer VerticalScrollBarVisibility="Visible">
+        <StackPanel Spacing="15">
+
+            <TextBlock Text="{Binding Header}"
+                       FontSize="24"
+                       FontWeight="Bold"/>
+
+            <ItemsControl ItemsSource="{Binding Stations}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderBrush="Gray"
+                                BorderThickness="1"
+                                CornerRadius="8"
+                                Padding="12"
+                                Margin="0,0,0,10">
+
+                            <StackPanel Spacing="6">
+
+                                <Grid ColumnDefinitions="*, Auto">
+                                    <TextBlock Text="{Binding StationId}"
+                                               FontSize="18"
+                                               FontWeight="Bold"/>
+
+                                    <TextBlock Grid.Column="1"
+                                               Text="{Binding Type}"
+                                               Foreground="Gray"/>
+                                </Grid>
+
+                                <TextBlock Text="{Binding CurrentOrderId}"/>
+                                <TextBlock Text="{Binding CurrentStepName}"/>
+
+                                <ProgressBar Minimum="0"
+                                             Maximum="100"
+                                             Value="{Binding Progress}"
+                                             Height="18"/>
+
+                                <TextBlock Text="{Binding Progress, StringFormat='Progress: {0}%'}"/>
+
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+        </StackPanel>
+    </ScrollViewer>
 
 </UserControl>
