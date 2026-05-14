@@ -14,10 +14,8 @@ public partial class IngredientsViewModel : ViewModelBase
     {
         Header = "Ingredients";
         
-        // Load the data using your service
-        _dataService = new RestaurantDataService();
+        _dataService = RestaurantDataService.Instance;
         
-        // Expose the loaded ingredients to the UI
         Ingredients = new ObservableCollection<Ingredient>(_dataService.Ingredients);
     }
 }

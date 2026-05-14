@@ -7,32 +7,21 @@ using RestaurantSimulator.Services;
 
 namespace RestaurantSimulator.ViewModels;
 
-/// <summary>
-/// handling kitchen stations and processing orders
-/// creates station instances from json definitions
-/// assigns recipe steps to correct stations
-/// simulates step execution with async tasks
-/// updates ui progress in real time
-/// </summary>
-
 public partial class StationsViewModel : ViewModelBase
 {
     private readonly RestaurantDataService _dataService;
 
-    //list of active kitchen station (bound to UI)
     public ObservableCollection<KitchenStation> Stations { get; } = new();
 
     public StationsViewModel()
     {
         Header = "Stations";
 
-        _dataService = new RestaurantDataService();
+        _dataService = RestaurantDataService.Instance;
 
-        //initialise stations based on json definitions
         LoadStations();
     }
 
-    //creates station instances based on type and default count
     private void LoadStations()
     {
         foreach (var stationDefinition in _dataService.Stations)
@@ -52,38 +41,46 @@ public partial class StationsViewModel : ViewModelBase
         }
     }
 
-    //main method that processes an entire order step-by-step
     public async Task ProcessOrderAsync(Order order)
     {
         if (order.SelectedRecipe == null)
             return;
+
+        foreach (var requiredIngredient in order.SelectedRecipe.RequiredIngredients)
+        {
+            var stockIngredient = _dataService.Ingredients.FirstOrDefault(i => i.Name == requiredIngredient.Name);
+            
+            if (stockIngredient != null)
+            {
+                await Dispatcher.UIThread.InvokeAsync(() => 
+                {
+                    stockIngredient.InitialStock -= requiredIngredient.Quantity;
+                });
+            }
+        }
 
         int totalSteps = order.SelectedRecipe.Steps.Count;
         int completedSteps = 0;
 
         foreach (var step in order.SelectedRecipe.Steps)
         {
-            //update order status in UI
             await Dispatcher.UIThread.InvokeAsync(() =>
             {
                 order.CurrentStep = step.Step;
                 order.OverallProgress = completedSteps * 100 / totalSteps;
             });
 
-            //wait until correct stations is avaliable 
             KitchenStation station = await WaitForFreeStationAsync(step.StationType);
             await RunStepOnStationAsync(station, order, step);
 
             completedSteps++;
 
-            //update overall progress
             await Dispatcher.UIThread.InvokeAsync(() =>
             {
                 order.OverallProgress = completedSteps * 100 / totalSteps;
             });
         }
 
-        //make order as completed
         await Dispatcher.UIThread.InvokeAsync(() =>
         {
             order.IsCompleted = true;
@@ -92,7 +89,6 @@ public partial class StationsViewModel : ViewModelBase
         });
     }
 
-    //wait until a free station of the required type is avaliable
     private async Task<KitchenStation> WaitForFreeStationAsync(string stationType)
     {
         while (true)
@@ -117,7 +113,6 @@ public partial class StationsViewModel : ViewModelBase
         }
     }
 
-    //move active station to top of UI list
     private void MoveBusyStationToTop(KitchenStation station)
     {
         int oldIndex = Stations.IndexOf(station);
@@ -128,7 +123,6 @@ public partial class StationsViewModel : ViewModelBase
         }
     }
 
-    //simulate execution of single recipe step
     private async Task RunStepOnStationAsync(
         KitchenStation station,
         Order order,
@@ -143,8 +137,7 @@ public partial class StationsViewModel : ViewModelBase
             station.Progress = 0;
         });
 
-        //simulated time based on json duration
-        int totalMilliseconds = step.Duration * 1000; //process time
+        int totalMilliseconds = step.Duration * 1000; 
 
         for (int progress = 0; progress <= 100; progress += 10)
         {
@@ -156,7 +149,6 @@ public partial class StationsViewModel : ViewModelBase
             });
         }
 
-        //reset station after finishing step
         await Dispatcher.UIThread.InvokeAsync(() =>
         {
             station.IsBusy = false;

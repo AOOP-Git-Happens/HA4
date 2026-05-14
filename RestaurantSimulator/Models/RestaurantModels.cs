@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace RestaurantSimulator.Models;
 
@@ -15,10 +16,13 @@ public class Station
     public int DefaultCount { get; set; } = 0;
 }
 
-public class Ingredient
+public partial class Ingredient : ObservableObject
 {
     public string Name { get; set; } = string.Empty;
-    public double InitialStock { get; set; } = 0;
+    
+    [ObservableProperty]
+    private double _initialStock = 0;
+    
     public string Unit { get; set; } = string.Empty;
     public double Cost { get; set; } = 0;
 }
@@ -34,7 +38,6 @@ public class Recipe
 
 public class RequiredIngredient
 {
-
     public string Name { get; set; } = string.Empty;
     public double Quantity { get; set; } 
 }

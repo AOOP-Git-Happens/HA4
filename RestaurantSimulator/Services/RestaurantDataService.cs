@@ -7,11 +7,14 @@ namespace RestaurantSimulator.Services;
 
 public class RestaurantDataService
 {
+    private static RestaurantDataService? _instance;
+    public static RestaurantDataService Instance => _instance ??= new RestaurantDataService();
+
     public List<Recipe> Recipes { get; private set; } = new();
     public List<Station> Stations { get; private set; } = new();
     public List<Ingredient> Ingredients { get; private set; } = new();
 
-    public RestaurantDataService()
+    private RestaurantDataService()
     {
         LoadRestaurantData();
     }
@@ -46,7 +49,6 @@ public class RestaurantDataService
     {
         string filepath = "Assets/Recipes.json";
         
-        // Rebuild the main data object
         var restaurantData = new RestaurantData
         {
             Recipes = this.Recipes,
@@ -54,7 +56,6 @@ public class RestaurantDataService
             Ingredients = this.Ingredients
         };
 
-        // Use camelCase to match your original JSON formatting
         var options = new JsonSerializerOptions
         {
             WriteIndented = true,
